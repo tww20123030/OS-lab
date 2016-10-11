@@ -1,0 +1,29 @@
+qemu -hda obj/kern/kernel.img -serial mon:stdio
+ok0xf010ffef
+6828 decimal is 015254 octal!er0xf010ffefR0x0
+or0xf010ffeeR0x0
+
+error! writing through NULL pointer! (%n argument)
+
+er0x0R0x0
+or0x0R0x0
+
+error! writing through NULL pointer! (%n argument)
+pading space in the right to number 22: ------22.
+chnum1: 0 chnum2: 0
+er0x0R0x0
+or0x0R0x0
+ok0xf010ffef
+6828 decimal is 015254 octal!er0xf010ffefR0x0
+or0xf010ffeeR0x0
+
+error! writing through NULL pointer! (%n argument)
+
+er0x0R0x0
+or0x0R0x0
+
+error! writing through NULL pointer! (%n argument)
+pading space in the right to number 22: ------22.
+chnum1: 0 chnum2: 0
+er0x0R0x0
+or0x0R0x0
