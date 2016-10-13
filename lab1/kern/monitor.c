@@ -104,6 +104,14 @@ int
 mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 {
 	// Your code here.
+    uint32_t *pebp;
+    int i;
+    pebp = (uint32_t*)read_ebp();
+    //cprintf("pebp:%p %p\n",pebp, pebp+1);
+    for(i = 0; i < 7; i++){
+    	cprintf("eip %08x  ebp %p  args %08x %08x %08x %08x %08x\n",*(pebp+1), pebp, *(pebp+2), *(pebp+3), *(pebp+4), *(pebp+5), *(pebp+6));
+	pebp = (uint32_t*)*(pebp);
+    }
     overflow_me();
     cprintf("Backtrace success\n");
 	return 0;

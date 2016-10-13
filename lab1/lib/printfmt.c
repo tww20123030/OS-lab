@@ -27,7 +27,7 @@ static const char * const error_string[MAXERROR] =
 	[E_NO_FREE_ENV]	= "out of environments",
 	[E_FAULT]	= "segmentation fault",
 };
-
+//left justified 
 static void
 printnum_width(void (*putch)(int, void*), void *putdat,
 	 unsigned long long num, unsigned base, int width, int padc,int *pamnt,int *pcount)
@@ -61,9 +61,12 @@ printnum(void (*putch)(int, void*), void *putdat,
 	// you can add helper function if needed.
 	// your code here:
 	int amnt = 0, count = 0; 
-	if( 9 > width && width > 0 ){
-		printnum_width(putch, putdat, num, base, width, padc, &amnt, &count);
-		return;
+	if( padc != '0'){
+		if( 9 > width && width > 0 ){
+			padc = ' ';
+			printnum_width(putch, putdat, num, base, width, padc, &amnt, &count);
+			return;
+		}
 	}
 	// first recursively print all preceding (more significant) digits
 	if (num >= base) {
@@ -154,7 +157,6 @@ vprintfmt(void (*putch)(int, void*), void *putdat, const char *fmt, va_list ap)
 		case '7':
 		case '8':
 			width = 8;
-			padc = ' ';
 			goto reswitch;
 		case '9':
 			for (precision = 0; ; ++fmt) {
