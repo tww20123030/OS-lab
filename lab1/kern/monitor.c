@@ -104,12 +104,17 @@ int
 mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 {
 	// Your code here.
+    struct Eipdebuginfo debuginfo;
+    struct Eipdebuginfo *info = &debuginfo;
+
     uint32_t *pebp;
     int i;
     pebp = (uint32_t*)read_ebp();
     //cprintf("pebp:%p %p\n",pebp, pebp+1);
     for(i = 0; i < 7; i++){
     	cprintf("eip %08x  ebp %p  args %08x %08x %08x %08x %08x\n",*(pebp+1), pebp, *(pebp+2), *(pebp+3), *(pebp+4), *(pebp+5), *(pebp+6));
+    	debuginfo_eip(*(pebp+1),info);
+	cprintf("	%s:%d: %s+%d\n",info->eip_file, info->eip_line, info->eip_fn_name, *(pebp+1)-info->eip_fn_addr);
 	pebp = (uint32_t*)*(pebp);
     }
     overflow_me();
