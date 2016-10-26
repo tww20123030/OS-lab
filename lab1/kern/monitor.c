@@ -24,6 +24,7 @@ struct Command {
 static struct Command commands[] = {
 	{ "help", "Display this list of commands", mon_help },
 	{ "kerninfo", "Display information about the kernel", mon_kerninfo },
+	{ "time", "Display the running time of program", mon_time },
 };
 #define NCOMMANDS (sizeof(commands)/sizeof(commands[0]))
 
@@ -54,6 +55,27 @@ mon_kerninfo(int argc, char **argv, struct Trapframe *tf)
 	cprintf("Kernel executable memory footprint: %dKB\n",
 		(end-entry+1023)/1024);
 	return 0;
+}
+inline uint64_t GetCycleCount()
+{
+	uint64_t time;
+ 	__asm __volatile("rdtsc": "=r" (time));
+	return time;
+}
+int mon_time(int argc, char **argv, struct Trapframe *tf){
+	int time = 0;
+	int i;
+
+	for (i = 0; i < NCOMMANDS; i++){
+		if(*commands[i].name == *argv[1]){
+			time = (int)GetCycleCount();
+			commands[i].func(argc, argv, tf);
+			time = (int)GetCycleCount()- time;
+			cprintf("%s cycles: %d\n", commands[i].name, time);
+		}
+	}
+		//cprintf("%s %s\n",commands[0].name,commands[1].name);
+	return time;
 }
 
 // Lab1 only
