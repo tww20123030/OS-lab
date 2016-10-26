@@ -1,0 +1,15 @@
+
+1.o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <.text>:
+   0:	ff 74 24 04          	pushl  0x4(%esp)
+   4:	55                   	push   %ebp
+   5:	89 e5                	mov    %esp,%ebp
+   7:	83 ec 18             	sub    $0x18,%esp
+   a:	c7 04 24 f0 21 10 f0 	movl   $0xf01021f0,(%esp)
+  11:	e9 fc ff ff ff       	jmp    0x12
+  16:	c9                   	leave  
+  17:	c3                   	ret    
